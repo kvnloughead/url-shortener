@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const dns = require('dns');
 const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
@@ -23,10 +24,13 @@ app.get('/', function(req, res) {
 
 app.post('/api/shorturl', (req, res) => {
   const { url } = req.body;
-  Url.create({ original_url: url }, (err, doc) => {
+  dns.lookup(url.split('//:')[1], (err) => {
     if (err) return res.status(404).send({ error: 'invalid url'});
-    return res.json({ original_url: doc.original_url, short_url: doc.short_url });
-  })
+    Url.create({ original_url: url }, (err, doc) => {
+      if (err) return res.status(404).send({ error: 'invalid url'});
+      return res.json({ original_url: doc.original_url, short_url: doc.short_url });
+    })
+  });
 });
 
 app.get('/api/shorturl/:short_url', (req, res) => {
