@@ -29,6 +29,14 @@ app.post('/api/shorturl', (req, res) => {
   })
 });
 
+app.get('/api/shorturl/:short_url', (req, res) => {
+  const { short_url } = req.params;
+  Url.find({ short_url }, (err, docs) => {
+    if (err) return res.send(err);
+    return res.redirect(docs[0].original_url);
+  })
+});
+
 app.get('/api/hello', function(req, res) {
   res.json({ greeting: 'hello API' });
 });
