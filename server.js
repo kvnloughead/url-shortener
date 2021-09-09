@@ -24,7 +24,7 @@ app.get('/', function(req, res) {
 app.post('/api/shorturl', (req, res) => {
   const { url } = req.body;
   Url.create({ original_url: url }, (err, doc) => {
-    if (err) return res.send(err);
+    if (err) return res.status(404).send({ error: 'invalid url'});
     return res.json({ original_url: doc.original_url, short_url: doc.short_url });
   })
 });
@@ -32,7 +32,7 @@ app.post('/api/shorturl', (req, res) => {
 app.get('/api/shorturl/:short_url', (req, res) => {
   const { short_url } = req.params;
   Url.find({ short_url }, (err, docs) => {
-    if (err) return res.status(404).send({ error: 'invalid url'});
+    if (err) return res.send(err);
     return res.redirect(docs[0].original_url);
   })
 });
