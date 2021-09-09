@@ -13,7 +13,7 @@ const UrlSchema = new mongoose.Schema({
   },
 });
 
-// UrlSchema.plugin(AutoIncrement, { inc_field: 'id' });
+UrlSchema.plugin(AutoIncrement, { inc_field: 'id' });
 
 module.exports = mongoose.model('url', UrlSchema);
 
