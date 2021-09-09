@@ -23,7 +23,7 @@ app.get('/', function(req, res) {
 
 app.post('/api/shorturl', (req, res) => {
   const { url } = req.body;
-  Url.create({ shortened_url: url }, (err, doc) => {
+  Url.create({ original_url: url }, (err, doc) => {
     if (err) return res.send(err);
     return res.json(doc);
   })

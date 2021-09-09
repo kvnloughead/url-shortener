@@ -3,7 +3,7 @@ const validator = require('validator');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const UrlSchema = new mongoose.Schema({
-  shortened_url: {
+  original_url: {
     type: String,
     required: true,
     validate: {
@@ -13,7 +13,7 @@ const UrlSchema = new mongoose.Schema({
   },
 });
 
-UrlSchema.plugin(AutoIncrement, { inc_field: 'id' });
+UrlSchema.plugin(AutoIncrement, { inc_field: 'short_url' });
 
 module.exports = mongoose.model('url', UrlSchema);
 
