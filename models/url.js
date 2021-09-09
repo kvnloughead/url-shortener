@@ -6,6 +6,8 @@ const UrlSchema = new mongoose.Schema({
   original_url: {
     type: String,
     required: true,
+    unique: true,
+    dropDups: true,
     validate: {
       validator: (v) => validator.isURL(v),
       message: 'Must be a valid url'
