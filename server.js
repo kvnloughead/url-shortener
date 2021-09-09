@@ -25,9 +25,9 @@ app.get('/', function(req, res) {
 app.post('/api/shorturl', (req, res) => {
   const { url } = req.body;
   dns.lookup(url.split('//:')[1], (err) => {
-    if (err) return res.status(404).send({ error: 'invalid url'});
+    if (err) return res.send({ error: 'invalid url'});
     Url.create({ original_url: url }, (err, doc) => {
-      if (err) return res.status(404).send({ error: 'invalid url'});
+      if (err) return res.send({ error: 'invalid url'});
       return res.json({ original_url: doc.original_url, short_url: doc.short_url });
     })
   });
